@@ -1,0 +1,186 @@
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// === Core Entities ===
+
+model Operator {
+  id           Int       @id @default(autoincrement())
+  email        String    @unique
+  passwordHash String
+  role         String    @default("OPERATOR") // ADMIN | OPERATOR
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+
+  appleAccounts          AppleAccount[]
+  sharingPlatformAccounts SharingPlatformAccount[]
+  recharges              Recharge[]
+  notifications          Notification[]
+  pushSubscriptions      PushSubscription[]
+  gmailOAuth             GmailOAuth[]
+  gmailAuditLogs         GmailAuditLog[]
+  onboardingCompleted    Boolean   @default(false)
+}
+
+model AppleAccount {
+  id                 Int       @id @default(autoincrement())
+  operatorId         Int
+  email              String
+  encryptedPassword  String
+  displayName        String
+  initialBalanceKurus Int      @default(0) // Starting balance in kuruş
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  operator      Operator       @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  subscriptions Subscription[]
+  recharges     Recharge[]
+
+  @@index([operatorId])
+}
+
+model SharingPlatformAccount {
+  id                Int       @id @default(autoincrement())
+  operatorId        Int
+  platform          String    // SPLIIIT | SHARHUB
+  email             String
+  encryptedPassword String    @default("") // For Sharhub login
+  displayName       String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  operator      Operator       @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  subscriptions Subscription[]
+  tenants       Tenant[]
+
+  @@index([operatorId])
+}
+
+model Subscription {
+  id                       Int       @id @default(autoincrement())
+  appleAccountId           Int
+  sharingPlatformAccountId Int?
+  name                     String    // Platform/service name (YouTube, Netflix...)
+  priceTRYKurus            Int       // Cost in kuruş (integer)
+  revenueEURCents          Int       @default(0) // Monthly/yearly revenue in euro cents
+  renewalDay               Int       // Day of month (1-31)
+  renewalFrequency         String    @default("MONTHLY") // MONTHLY | YEARLY
+  platformAccountName      String?   // Actual service account (e.g. "zeleo789@gmail.com" for YouTube)
+  createdAt                DateTime  @default(now())
+  updatedAt                DateTime  @updatedAt
+
+  appleAccount          AppleAccount            @relation(fields: [appleAccountId], references: [id], onDelete: Cascade)
+  sharingPlatformAccount SharingPlatformAccount? @relation(fields: [sharingPlatformAccountId], references: [id], onDelete: SetNull)
+  tenants               Tenant[]
+
+  @@index([appleAccountId])
+  @@index([sharingPlatformAccountId])
+}
+
+model Tenant {
+  id                       Int       @id @default(autoincrement())
+  sharingPlatformAccountId Int
+  subscriptionId           Int
+  email                    String
+  status                   String    @default("ACTIVE") // ACTIVE | LEFT
+  joinedAt                 DateTime  @default(now())
+  leftAt                   DateTime?
+
+  sharingPlatformAccount SharingPlatformAccount @relation(fields: [sharingPlatformAccountId], references: [id], onDelete: Cascade)
+  subscription           Subscription           @relation(fields: [subscriptionId], references: [id], onDelete: Cascade)
+
+  @@index([sharingPlatformAccountId])
+  @@index([subscriptionId])
+}
+
+model Recharge {
+  id             Int       @id @default(autoincrement())
+  appleAccountId Int
+  operatorId     Int
+  amountTRYKurus Int       // Amount in kuruş (integer)
+  confirmedAt    DateTime  @default(now())
+
+  appleAccount AppleAccount @relation(fields: [appleAccountId], references: [id], onDelete: Cascade)
+  operator     Operator     @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+
+  @@index([appleAccountId])
+  @@index([operatorId])
+}
+
+model Notification {
+  id          Int       @id @default(autoincrement())
+  operatorId  Int
+  type        String    // RECHARGE_DUE | RECHARGE_URGENT | TENANT_ARRIVAL | TENANT_DEPARTURE | GENERAL
+  title       String
+  body        String
+  actionType  String?   // RECHARGE | ADD_TENANT | REMOVE_TENANT
+  isRead      Boolean   @default(false)
+  scheduledAt DateTime?
+  sentAt      DateTime?
+  createdAt   DateTime  @default(now())
+
+  operator Operator @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+
+  @@index([operatorId])
+}
+
+model PushSubscription {
+  id         Int       @id @default(autoincrement())
+  operatorId Int
+  endpoint   String
+  p256dh     String
+  auth       String
+  createdAt  DateTime  @default(now())
+
+  operator Operator @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+
+  @@index([operatorId])
+}
+
+model GmailOAuth {
+  id                    Int       @id @default(autoincrement())
+  operatorId            Int
+  gmailAddress          String
+  encryptedRefreshToken String
+  accessToken           String?
+  tokenExpiresAt        DateTime?
+  lastCheckedAt         DateTime?  // Last time worker checked this mailbox
+  createdAt             DateTime  @default(now())
+  updatedAt             DateTime  @updatedAt
+
+  operator  Operator        @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+  auditLogs GmailAuditLog[]
+
+  @@unique([operatorId, gmailAddress])
+  @@index([operatorId])
+}
+
+model GmailAuditLog {
+  id              Int       @id @default(autoincrement())
+  gmailOAuthId    Int
+  operatorId      Int
+  gmailMessageId  String    // Gmail message ID (for dedup)
+  from            String
+  subject         String
+  snippet         String?
+  receivedAt      DateTime
+  domain          String    // spliiit.com | sharesub.com
+  platform        String    // Spliiit | Sharhub
+  eventType       String    // NEW_SUBSCRIBER | DEPARTURE | PAYMENT | RENEWAL | INFO | UNKNOWN
+  eventSummary    String    // GPT-4o-mini generated summary
+  confidence      Float     @default(0) // AI confidence 0-1
+  isRead          Boolean   @default(false)
+  createdAt       DateTime  @default(now())
+
+  gmailOAuth GmailOAuth @relation(fields: [gmailOAuthId], references: [id], onDelete: Cascade)
+  operator   Operator   @relation(fields: [operatorId], references: [id], onDelete: Cascade)
+
+  @@unique([gmailOAuthId, gmailMessageId])
+  @@index([operatorId])
+  @@index([gmailOAuthId])
+}

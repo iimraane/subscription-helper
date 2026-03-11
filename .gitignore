@@ -1,0 +1,30 @@
+# Dependencies
+node_modules/
+dist/
+dist.tar
+dist.zip
+build/
+
+# Environment files and secrets
+.env
+.env.*
+!.env.example
+vapid_keys.txt
+errors.txt
+
+# Database
+*.db
+*.db-journal
+server/data/
+
+# OS/Agent files
+.DS_Store
+Thumbs.db
+_bmad/
+_bmad-output/
+.agent/
+
+# Archives
+*.tar
+*.tar.gz
+*.zip

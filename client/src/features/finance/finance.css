@@ -1,0 +1,174 @@
+.finance-main {
+    padding: 1.5rem 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.finance-main h2 {
+    font-size: 1.3rem;
+    font-weight: 700;
+    margin: 0 0 1.25rem 0;
+}
+
+/* KPIs */
+.finance-kpis {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.fin-kpi {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1.15rem;
+    text-align: center;
+    transition: border-color 0.2s;
+}
+
+.fin-kpi:hover {
+    border-color: rgba(124, 92, 252, 0.25);
+}
+
+.fin-kpi-label {
+    font-size: 0.68rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.fin-kpi-value {
+    font-size: 1.35rem;
+    font-weight: 700;
+}
+
+.fin-kpi-sub {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.3);
+    margin-top: 0.25rem;
+}
+
+/* Grand Totals */
+.grand-totals {
+    display: flex;
+    gap: 1.5rem;
+    padding: 1rem 1.25rem;
+    background: rgba(124, 92, 252, 0.05);
+    border: 1px solid rgba(124, 92, 252, 0.12);
+    border-radius: 14px;
+}
+
+.gt-item {
+    flex: 1;
+    text-align: center;
+}
+
+.gt-label {
+    display: block;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.35rem;
+}
+
+.gt-value {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+/* Month List */
+.month-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.month-row {
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: border-color 0.2s;
+}
+
+.month-row:hover {
+    border-color: rgba(255, 255, 255, 0.12);
+}
+
+.month-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.85rem 1.15rem;
+    cursor: pointer;
+    user-select: none;
+}
+
+.month-label {
+    font-weight: 600;
+    font-size: 0.9rem;
+    text-transform: capitalize;
+}
+
+.month-stats {
+    display: flex;
+    gap: 1.25rem;
+    font-size: 0.85rem;
+    align-items: center;
+}
+
+.month-detail {
+    padding: 0 1.15rem 0.85rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.detail-line {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.35rem 0;
+    font-size: 0.82rem;
+}
+
+.detail-line.recharge-line {
+    padding: 0.5rem 0;
+    color: #a0e7a0;
+    font-size: 0.8rem;
+}
+
+.detail-costs {
+    display: flex;
+    gap: 0.75rem;
+    font-size: 0.82rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .finance-kpis {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .grand-totals {
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    .month-stats {
+        gap: 0.5rem;
+        font-size: 0.75rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .finance-main {
+        padding: 1rem;
+    }
+
+    .finance-kpis {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+}

@@ -1,0 +1,402 @@
+/* Cockpit specific styles — extends the shared accounts.css */
+
+.cockpit-main {
+    padding: 1.5rem 2rem;
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+/* === KPI Grid === */
+
+.kpi-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 14px;
+    padding: 1.25rem;
+    text-align: center;
+    transition: border-color 0.2s, transform 0.15s;
+}
+
+.kpi-card:hover {
+    border-color: rgba(124, 92, 252, 0.3);
+    transform: translateY(-2px);
+}
+
+.kpi-label {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: rgba(255, 255, 255, 0.4);
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+.kpi-value {
+    font-size: 1.5rem;
+    font-weight: 700;
+    line-height: 1.2;
+}
+
+.kpi-sub {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.35);
+    margin-top: 0.35rem;
+}
+
+/* === Action Section === */
+
+.cockpit-section {
+    margin-top: 0.5rem;
+}
+
+.section-title {
+    font-size: 1.15rem;
+    font-weight: 600;
+    margin: 0 0 1rem 0;
+}
+
+/* === Calm State === */
+
+.calm-state {
+    text-align: center;
+    padding: 3rem 2rem;
+    background: rgba(76, 175, 80, 0.04);
+    border: 1px solid rgba(76, 175, 80, 0.12);
+    border-radius: 16px;
+}
+
+.calm-icon {
+    font-size: 3rem;
+    margin-bottom: 0.75rem;
+}
+
+.calm-state p {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 1rem;
+    margin: 0;
+}
+
+.next-renewal {
+    margin-top: 1.25rem;
+    padding: 0.75rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 10px;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 0.3rem;
+    font-size: 0.85rem;
+}
+
+.next-label {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+.next-days {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.8rem;
+}
+
+/* === Action Cards === */
+
+.actions-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.action-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 14px;
+    border-left: 4px solid transparent;
+    transition: transform 0.15s;
+}
+
+.action-card:hover {
+    transform: translateX(4px);
+}
+
+.action-card.urgency-urgent {
+    border-left-color: #ff5252;
+    background: rgba(255, 82, 82, 0.06);
+}
+
+.action-card.urgency-soon {
+    border-left-color: #ffa726;
+    background: rgba(255, 167, 38, 0.04);
+}
+
+.action-card.urgency-upcoming {
+    border-left-color: #7c5cfc;
+    background: rgba(124, 92, 252, 0.04);
+}
+
+.action-card.urgency-ok {
+    border-left-color: rgba(255, 255, 255, 0.15);
+}
+
+.action-left {
+    flex: 1;
+    min-width: 0;
+}
+
+.action-title {
+    font-weight: 600;
+    font-size: 1rem;
+    margin-bottom: 0.3rem;
+}
+
+.action-desc {
+    font-size: 0.85rem;
+    color: rgba(255, 255, 255, 0.55);
+    margin-bottom: 0.3rem;
+}
+
+.action-meta {
+    font-size: 0.75rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.action-right {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.5rem;
+    margin-left: 1rem;
+}
+
+.action-amount {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: #ffa726;
+    white-space: nowrap;
+}
+
+.action-btn {
+    padding: 0.5rem 1rem;
+    background: linear-gradient(135deg, #4caf50, #66bb6a);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    white-space: nowrap;
+}
+
+.action-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+}
+
+.action-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* === Onboarding === */
+
+.cockpit-onboarding {
+    text-align: center;
+    padding: 3rem 2rem;
+}
+
+.onboarding-icon {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+}
+
+.cockpit-onboarding h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin: 0 0 0.5rem 0;
+}
+
+.cockpit-onboarding p {
+    color: rgba(255, 255, 255, 0.5);
+    margin: 0 0 2rem 0;
+}
+
+.onboarding-steps {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+.onboarding-step {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.25rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    text-decoration: none;
+    color: inherit;
+    transition: all 0.2s;
+}
+
+.onboarding-step:hover {
+    border-color: rgba(124, 92, 252, 0.3);
+    transform: translateX(4px);
+    background: rgba(124, 92, 252, 0.06);
+}
+
+.step-number {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #7c5cfc, #9c7cff);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+}
+
+.step-content {
+    flex: 1;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+}
+
+.step-content span {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.step-arrow {
+    color: rgba(255, 255, 255, 0.3);
+    font-size: 1.2rem;
+}
+
+/* === Responsive === */
+
+/* === Quick Recharge === */
+
+.quick-recharge-toggle {
+    padding: 0.5rem 1rem;
+    background: rgba(124, 92, 252, 0.1);
+    border: 1px solid rgba(124, 92, 252, 0.25);
+    border-radius: 8px;
+    color: #b8a9ff;
+    font-size: 0.82rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.quick-recharge-toggle:hover {
+    background: rgba(124, 92, 252, 0.18);
+    border-color: rgba(124, 92, 252, 0.4);
+}
+
+.quick-recharge-card {
+    padding: 1rem 1.25rem;
+    background: rgba(124, 92, 252, 0.05);
+    border: 1px solid rgba(124, 92, 252, 0.15);
+    border-radius: 14px;
+    margin-bottom: 1.25rem;
+}
+
+.quick-recharge-card .form-group {
+    margin-bottom: 0;
+}
+
+.quick-recharge-card .form-group label {
+    font-size: 0.72rem;
+    color: rgba(255, 255, 255, 0.5);
+    margin-bottom: 0.25rem;
+    display: block;
+}
+
+.quick-recharge-card .form-group input,
+.quick-recharge-card .form-group select {
+    width: 100%;
+    padding: 0.45rem 0.65rem;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.85rem;
+}
+
+/* === Action Amount Input === */
+
+.action-amount-row {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+    gap: 0.15rem;
+}
+
+.action-amount-input {
+    width: 90px;
+    padding: 0.35rem 0.5rem;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 167, 38, 0.3);
+    border-radius: 6px;
+    color: #ffa726;
+    font-size: 1rem;
+    font-weight: 700;
+    text-align: right;
+    transition: border-color 0.2s;
+}
+
+.action-amount-input:focus {
+    outline: none;
+    border-color: rgba(255, 167, 38, 0.6);
+}
+
+@media (max-width: 768px) {
+    .kpi-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .action-card {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.75rem;
+    }
+
+    .action-right {
+        flex-direction: row;
+        justify-content: space-between;
+        margin-left: 0;
+    }
+}
+
+@media (max-width: 480px) {
+    .cockpit-main {
+        padding: 1rem;
+    }
+
+    .kpi-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 0.5rem;
+    }
+
+    .kpi-value {
+        font-size: 1.15rem;
+    }
+}
